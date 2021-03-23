@@ -1,0 +1,26 @@
+#!/bin/bash
+
+################
+### ZappaBoy ###
+################
+
+TAG=${1:-""}
+DOCKERFILE_PATH=${2:-"."}
+DOCKER_RUNNING=$(docker ps -a | grep "${TAG}")
+OTHER_PARAMS=${@:3}
+
+if [ -n "${TAG}" ]; then
+    if [ -n "${DOCKER_RUNNING}" ]; then
+	echo "Removing old docker..."
+	docker stop "${TAG}" && docker rm "${TAG}"
+    fi
+
+    echo "Building and running docker"
+    docker build -t "${TAG}" "${DOCKERFILE_PATH}" &&\
+	docker run "${OTHER_PARAMS}" --name "${TAG}" -t "${TAG}" &&\
+    	docker logs -f "${TAG}"
+else
+    echo "Missing docker tag"
+fi
+
+exit 0

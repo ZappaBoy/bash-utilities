@@ -1,0 +1,74 @@
+#!/bin/bash
+
+##################
+###  ZappaBoy  ###
+##################
+
+# Define Color
+NC='\033[0m' 
+RED='\033[31m'
+GREEN='\033[32m'
+
+# Define input
+tofind=${1:-""}
+toreplace=${2:-""}
+
+# Define recoursive function
+recursiverm(){
+
+    # Find and rename directories first
+    for d in ./*  ; do
+            if [[ -d "$d" ]]; then
+                    (cd -- "$d" && recursiverm)
+            fi
+
+            if [[ -d "$d" && "$d" =~ "$tofind" ]]; then
+                    mv -v "$d" "${d/"$tofind"/"$toreplace"}"
+            fi
+    done
+
+    # Find files in directories
+    for f in ./*  ; do
+            # Replace files content
+            sed -i -e "s/$tofind/$toreplace/g" "$f" 2>/dev/null
+            
+            # Rename files
+            if [[ -f "$f" && "$f" =~ "$tofind" ]]; then
+                    mv -v "$f" "${f/"$tofind"/"$toreplace"}"
+            fi
+    done
+}
+
+# Print help
+if [ "$1" == "-h" ] || [ "$1" == "--help"  ]; then
+    echo -e "${GREEN}This is a simple bash script to replace all occurrences of a string in folder name, file name and file content recursively.${NC}"
+    echo -e "${RED}Pay attention:${NC} this script replace ALL OCCURRENCES recoursively from folder where it is called: \n"
+    echo -e "${RED}This process can break the system if used without knowing what you're doing.${NC}\n"
+    echo -e "Usage: ${GREEN}./replaceStrInAll 'String To Find' 'String To Replace' ${NC}"
+    exit 0
+fi
+
+# Define main function
+if [[ "$tofind" && "$toreplace" ]]; then
+    # Ask for confirmation
+    while [[ $key == "" ]]; do
+        echo -e "${GREEN}"
+        read -p "Are you sure to replace "$tofind" in "$toreplace" [Y/n]? " -r key
+        echo -e "${NC}"
+    done
+    # Check confirmation
+    if [[ $key =~ ^[Y]$ ]]; then
+        # Start recoursive function
+        recursiverm
+        echo "Replaced $1 in $2 "
+        exit 0
+    else
+        # If not confirmed
+        echo -e "${RED}Abort... ${NC}"
+        exit 0
+    fi
+else
+    # If not specified input
+    echo -e "${RED}Error... \n${GREEN}Plese select string to find and string to replace ${NC}"
+    exit 0
+fi
