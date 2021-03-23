@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-VERSION='1.0.0'
+VERSION='1.1.0'
 HOURS=1
 
 TIMETABLE=$(cat << _EOF_
@@ -22,14 +22,14 @@ _EOF_
 usage() { cat << _EOF_
 Usage: lessons [OPTION]
 Show the lessons.
-     -a, --all      print all the lessons (weekly)
-     -d, --day      print lessons of the specified day (default current day)
-     -h, --help     display this help and exit
-     -v, --version  output version information and exit
+     -a,    print all the lessons (weekly)
+     -d,    print lessons of the specified day (default current day)
+     -h,    display this help and exit
+     -v,    output version information and exit
 
 Exit status:
-     0  if OK,
-     1  if minor problems (e.g., wrong specified day)
+     0      if OK,
+     1      if minor problems (e.g., wrong specified day)
 
 License:
     License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.
@@ -69,16 +69,24 @@ show-daily-lessons(){
     echo "${DAILY_LESSONS}"
 }
 
+show-tomorrow-lessons(){
+    show-daily-lessons "$(date --date 'next day' +%a)"
+}
+
 show-all-lessons(){
     ALL_LESSONS=$(echo "${TIMETABLE}" | column -s "|" -L -t)
     echo "${ALL_LESSONS}"
 }
 
-while getopts "ad:hv" o; do
+while getopts "atd:hv" o; do
     case "${o}" in
         a)
             echo "Show all lessons"
             show-all-lessons
+            ;;
+        t)
+            echo "Show tomorrow lessons"
+            show-tomorrow-lessons
             ;;
         d)
             DAY=${OPTARG:0:3}
