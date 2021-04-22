@@ -57,7 +57,7 @@ nohup "${TELEGRAM_PATH}" >/dev/null 2>&1 &
 echo -e "${GREEN}---------- Starting Discord ----------${NC}"
 nohup discord >/dev/null 2>&1 &
 
-disown -a
+
 # Wait and focusing again on the windows where script running
 sleep 5 && wmctrl -a "${WINDOW_NAME}"
 
@@ -65,11 +65,12 @@ sleep 5 && wmctrl -a "${WINDOW_NAME}"
 echo -e "${GREEN}---------- Updating System ----------${NC}"
 sudo pacman -Syyuu --noconfirm
 
-echo -e "\n${RED}"
-
 if [[ $(date +%u) -lt 6 ]]; then
+    echo -e "\n${RED}---------- Today lessons ${USER}! ----------${NC}"
     lessons
 fi
 
 echo -e "${RED}---------- Have a nice day ${USER}! ----------${NC}"
+
+disown -a
 exit 0
