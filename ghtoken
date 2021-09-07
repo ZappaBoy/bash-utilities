@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Alias version
+# #------------------------ GitHub Access Token -----------------------#
+# function getGitHubToken(){
+#          zenity --password --text="Your password Sir." | encfs -S ~/.locker ~/locker
+#         if [ $? -eq 0 ];then
+#             echo "Your token has been copied in clipboard sir."
+#             cat ~/locker/github-token.txt | xclip -sel clip
+#             umount ~/locker
+#         else
+#             echo "Incorrect password"
+#         fi
+# }
+# alias ghtoken='getGitHubToken'
+
+
+width=250
+zenity --password --text="Your password Sir." --width=$width | encfs -S ~/.locker ~/locker
+if [ $? -eq 0 ]; then
+    cat ~/locker/github-token.txt | xclip -sel clip
+    umount ~/locker
+    # echo "Your token has been copied in clipboard Sir."
+    zenity --info --text="Your token has been copied in clipboard Sir." --width=$width &
+else
+    # echo "Incorrect password"
+    zenity --error --text="Incorrect password" --width=$width &
+fi
