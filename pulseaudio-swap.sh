@@ -20,10 +20,19 @@ swap(){
     if [ "$first_output" = "$default_output" ]; then
         pacmd set-default-sink "${second_output}"
         pacmd set-default-source "${second_input}"
+        pacmd set-sink-mute "${second_output}" false
+        pacmd set-source-mute "${second_input}" false
+        pacmd set-sink-mute "${first_output}" true
+        pacmd set-source-mute "${first_input}" true
     else
         pacmd set-default-sink "${first_output}"
         pacmd set-default-source "${first_input}"
+        pacmd set-sink-mute "${first_output}" false
+        pacmd set-source-mute "${first_input}" false
+        pacmd set-sink-mute "${second_output}" true
+        pacmd set-source-mute "${second_input}" true
     fi
 }
 
 swap
+exit 0

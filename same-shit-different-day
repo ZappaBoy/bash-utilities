@@ -59,11 +59,11 @@ nohup discord >/dev/null 2>&1 &
 
 
 # Wait and focusing again on the windows where script running
-sleep 5 && wmctrl -a "${WINDOW_NAME}"
+wmctrl -a "${WINDOW_NAME}"
 
 # Perform auto update
 echo -e "${GREEN}---------- Updating System ----------${NC}"
-sudo pacman -Syyuu --noconfirm
+yay -Syyuu --noconfirm
 
 if [[ $(date +%u) -lt 6 ]]; then
     echo -e "\n${RED}---------- Today lessons ${USER}! ----------${NC}"
