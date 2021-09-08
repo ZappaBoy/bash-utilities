@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# This script open encrypted directory ~/.locker, mount it to ~/locker and open Dolphin.
+# To close simply exit Dolphin and run: "./locker -c"
+width=250
+encrypted_folder="$HOME/.locker"
+mount_folder="$HOME/locker"
+
+if [ "${1}" == "-c" ]; then
+    umount "${mount_folder}"
+    zenity --info --text="Locker unmounted" --width=$width &
+    exit 0
+fi
+
+zenity --password --text="Your password Sir." --width=$width | \
+    encfs -S "${encrypted_folder}" "${mount_folder}"
+if [ $? -eq 0 ]; then
+    (dolphin "${mount_folder}" >/dev/null 2>&1 &)
+else
+    # echo "Incorrect password"
+    zenity --error --text="Incorrect password" --width=$width &
+fi
