@@ -10,7 +10,6 @@ RED='\033[31m'
 GREEN='\033[32m'
 TARGET_TERMINAL="${1:-yakuake}"
 YOUTUBE_SEARCH_BASE_URL='https://www.youtube.com/results?search_query='
-TELEGRAM_PATH="/home/${USER}/Desktop/Programs/Telegram/Telegram"
 CACHE="/home/${USER}/.cache/same-shit-different-day.cache"
 
 function generate_url (){
@@ -52,7 +51,7 @@ else
 fi
 
 echo -e "${GREEN}---------- Starting Telegram ----------${NC}"
-nohup "${TELEGRAM_PATH}" >/dev/null 2>&1 &
+nohup telegram-desktop >/dev/null 2>&1 &
 
 echo -e "${GREEN}---------- Starting Discord ----------${NC}"
 nohup discord >/dev/null 2>&1 &

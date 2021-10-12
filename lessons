@@ -4,18 +4,25 @@ set -euo pipefail
 VERSION='1.1.0'
 HOURS=1
 
+PAUSE="---"
+FREET=" . "
+OPTIM="Optimization methods"
+SEMIN="Semantic intelligence"
+SOFTA="Software analytics"
+AUTOM="Automated software"
+
 TIMETABLE=$(cat << _EOF_
 |Monday|Tuesday|Wednesday|Thursday|Friday|
 | - - - | - - - | - - - | - - - | - - - |
-09-10:|||Networking security|Computational statistics|Computational statistics|
-10-11:|||Networking security|Computational statistics|Computational statistics|
-11-12:|Biometric systems|Networking security|Networking security|Informatics and law|Biometric systems|
-12-13:|Biometric systems|Networking security|Networking security|Informatics and law|Biometric systems|
-13-14:|---|---|---|---|---|
-14-15:||Project management|Computational statistics|Informatics and law|Project management|
-15-16:||Project management|Computational statistics|Informatics and law|Project management|
-16-17:||Project management|||Project management|
-17-18:||Project management||||
+09-10:|${FREET}|${FREET}|${SEMIN}|${FREET}|${FREET}|
+10-11:|${AUTOM}|${FREET}|${SEMIN}|${SOFTA}|${FREET}|
+11-12:|${AUTOM}|${FREET}|${SOFTA}|${SOFTA}|${FREET}|
+12-13:|${AUTOM}|${FREET}|${SOFTA}|${SOFTA}|${FREET}|
+13-14:|${PAUSE}|${PAUSE}|${PAUSE}|${PAUSE}|${PAUSE}|
+14-15:|${OPTIM}|${SEMIN}|${OPTIM}|${FREET}|${FREET}|
+15-16:|${OPTIM}|${SEMIN}|${OPTIM}|${FREET}|${FREET}|
+16-17:|${OPTIM}|${FREET}|${OPTIM}|${FREET}|${FREET}|
+17-18:|${FREET}|${FREET}|${FREET}|${FREET}|${FREET}|
 _EOF_
 )
 
