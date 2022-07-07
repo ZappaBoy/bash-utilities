@@ -33,6 +33,8 @@ case $tts_lang in
     ;;
 esac
 
+text_to_say=$(echo "$text_to_say" | tr -d '"' | tr '[:upper:]' '[:lower:]')
+
 tts --text "$text_to_say" \
     --model_name "$model" \
     --out_path "$temp_file_path" > /dev/null \
