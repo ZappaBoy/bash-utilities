@@ -8,7 +8,7 @@ set -x
 
 # Replace following with your outputs
 # You can check available sinks with: pactl list short sinks
-first_sink=alsa_output.pci-0000_00_1f.3.analog-stereo
+first_sink=alsa_output.pci-0000_2f_00.4.analog-stereo
 second_sink=alsa_output.usb-Logitech_PRO_X_Wireless_Gaming_Headset-00.analog-stereo
 
 # Replace following with your inputs

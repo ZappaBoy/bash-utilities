@@ -7,6 +7,8 @@ set -Eeuo pipefail
 trap cleanup SIGINT SIGTERM ERR EXIT
 
 script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
+TRUE='true'
+FALSE='false'
 
 usage() {
     cat <<EOF
@@ -26,7 +28,8 @@ EOF
 
 cleanup() {
     trap - SIGINT SIGTERM ERR EXIT
-    # script cleanup here
+    NOFORMAT='\033[0m'
+    msg "Exiting...${NOFORMAT}"
 }
 
 setup_colors() {
@@ -39,6 +42,9 @@ setup_colors() {
         PURPLE='\033[0;35m'
         CYAN='\033[0;36m'
         YELLOW='\033[1;33m'
+        INFO="${BLUE}"
+        WARNING="${YELLOW}"
+        ERROR="${YELLOW}"
     else
         NOFORMAT=''
         RED=''

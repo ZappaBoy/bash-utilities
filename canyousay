@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+#####################
+# Coded by ZappaBoy #
+#####################
+
+
+temp_file_path="/tmp/canyousay.wav"
+text_to_say=${1:-"Text to speech is wonderful!"}
+tts_lang=${2:-"en"}
+
+# Say thanks to Mozilla, synesthesiam and the contributors
+# Mozilla TTS: https://github.com/mozilla/TTS
+# Docker Image: https://github.com/synesthesiam/docker-mozillatts
+
+# Fist install TTS with pip:
+# pip install TTS
+
+model=""
+
+case $tts_lang in
+
+  en)
+    model="tts_models/en/ljspeech/tacotron2-DDC"
+    ;;
+
+  it)
+    model="tts_models/it/mai_female/glow-tts"
+    ;;
+
+  *)
+    model="tts_models/en/ljspeech/tacotron2-DDC"
+    ;;
+esac
+
+tts --text "$text_to_say" \
+    --model_name "$model" \
+    --out_path "$temp_file_path" > /dev/null \
+    && aplay -q "$temp_file_path" \
+    && rm "$temp_file_path"
