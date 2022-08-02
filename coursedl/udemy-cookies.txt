@@ -1,0 +1,9 @@
+# Copy here your udemy cookies from google developer console
+# Open Google Chrome
+# Go to https://www.udemy.com/ and login
+# After logged open developer console (F12)
+# Go to Application > Storage > Cookies > Select udemy cookies
+# Copy the table with cookies entirely
+# Paste the content in this file
+# Replace entirely the content removing these instructions
+# For other information check: https://github.com/dandv/convert-chrome-cookies-to-netscape-format
