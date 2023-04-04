@@ -1,20 +1,25 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-set -x
 # IMPORTANT:
 # Edit /etc/pulse/default.pa
 # from "load-module module-stream-restore" to "load-module module-stream-restore restore_device=false"
 
 # Replace following with your outputs
 # You can check available sinks with: pactl list short sinks
-first_sink=alsa_output.pci-0000_2f_00.4.analog-stereo
-second_sink=alsa_output.usb-Logitech_PRO_X_Wireless_Gaming_Headset-00.analog-stereo
+first_sink_pattern="pci-0000_2f_00.*\.analog-stereo"
+second_sink_pattern="Logitech_PRO_X_Wireless_Gaming_Headset"
 
 # Replace following with your inputs
 # You can check available sources with: pactl list short sources
-first_source=alsa_input.usb-CMEDIA_Q9-1-00.mono-fallback
-second_source=alsa_input.usb-Logitech_PRO_X_Wireless_Gaming_Headset-00.mono-fallback
+first_source_pattern="CMEDIA_Q9-1-00"
+second_source_pattern="Logitech_PRO_X_Wireless_Gaming_Headset.*\.mono-fallback"
+
+first_sink=$(pactl list short sinks | awk '{print $2}' | grep -P "$first_sink_pattern")
+second_sink=$(pactl list short sinks | awk '{print $2}' | grep -P "$second_sink_pattern")
+
+first_source=$(pactl list short sources | awk '{print $2}' | grep -P "$first_source_pattern")
+second_source=$(pactl list short sources | awk '{print $2}' | grep -P "$second_source_pattern")
 
 move-sink() {
     # Thanks to: https://gist.github.com/ruzickap/53080ade88544661afa52bc7c7892cf4
