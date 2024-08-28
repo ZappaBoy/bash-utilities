@@ -18,5 +18,5 @@ course_dir="$script_dir/${course_name}"
 mkdir -p "$course_dir"
 
 node "$script_dir/convert-cookies.js" "$script_dir/udemy-cookies.txt" > "$script_dir/netscape-cookies.txt"
-youtube-dl "${base_url}${course_name}" --cookies "$script_dir/netscape-cookies.txt" --output "$course_dir/%(title)s.%(ext)s"
+youtube-dl -v -4 "${base_url}${course_name}" --cookies "$script_dir/netscape-cookies.txt" --output "$course_dir/%(title)s.%(ext)s"
 rm "$script_dir/netscape-cookies.txt"

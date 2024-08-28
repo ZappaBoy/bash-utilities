@@ -1,18 +1,18 @@
 #!/bin/bash
 
 # Alias version
-# #------------------------ GitHub Access Token -----------------------#
-# function getGitHubToken(){
+# #------------------------ GitLab Access Token -----------------------#
+# function getGitLabToken(){
 #          zenity --password --text="Your password Sir." | encfs -S ~/.locker ~/locker
 #         if [ $? -eq 0 ];then
 #             echo "Your token has been copied in clipboard sir."
-#             cat ~/locker/github-token.txt | xclip -sel clip
+#             cat ~/locker/-token.txt | xclip -sel clip
 #             umount ~/locker
 #         else
 #             echo "Incorrect password"
 #         fi
 # }
-# alias ghtoken='getGitHubToken'
+# alias gltoken='getGitLabToken'
 
 function safe-umount() {
     busy=true
@@ -34,7 +34,7 @@ function safe-umount() {
 width=250
 zenity --password --text="Your password Sir." --width=$width | encfs -S ~/.locker ~/locker
 if [ $? -eq 0 ]; then
-    cat ~/locker/GitHub/github-token.txt | xclip -sel clip
+    cat ~/locker/GitLab/gitlab-token.txt | xclip -sel clip
     safe-umount ~/locker &
     # echo "Your token has been copied in clipboard Sir."
     zenity --info --text="Your token has been copied in clipboard Sir." --width=$width &
